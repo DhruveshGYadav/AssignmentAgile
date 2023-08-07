@@ -1,0 +1,71 @@
+﻿@using Common.Models;
+@model Employee;
+@{
+    Layout = "_Layout";    
+}
+Add new employee
+<div class="container col-lg-6">
+    <div class="m-4">
+        @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="mb-3">
+                @Html.LabelFor(m => m.EmployeeCode, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.EmployeeCode, new { @class = "form-control", @placeholder = "Employee Code", @required = "required" })
+                @Html.ValidationMessageFor(m => m.EmployeeCode, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Employee Name", @required = "required" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.MobileNo, new {@class = "form-control", @placeholder = "Mobile No", @required = "required", @maxlength="10" })
+                @Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.DOB, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @type = "date", @required = "required" })
+                @Html.ValidationMessageFor(m => m.DOB, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.Gender, new { @class = "form-label" })
+                <div>
+                    @Html.RadioButtonFor(m => m.Gender, "Male", new { @id = "male", @checked = "checked" }) @Html.Label("male", "Male")
+                    @Html.RadioButtonFor(m => m.Gender, "Female", new { @id = "female" }) @Html.Label("female", "Female")
+                </div>
+                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">File</label>
+                @Html.TextBoxFor(m => m.File, new { @type = "file", @accept = "image/*", @required = "required" })
+                @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+        }
+    </div>    
+    <script>
+        //jquery validation for prevent user for not to upload image file greated than 1 MB.
+        document.addEventListener("DOMContentLoaded", function () {
+            var fileInput = document.getElementById("File");
+            var maxFileSize = 1 * 1024 * 1024; // 1MB
+
+            fileInput.addEventListener("change", function () {
+                var files = fileInput.files;
+                if (files.length > 0) {
+                    var fileSize = files[0].size;
+                    if (fileSize > maxFileSize) {
+                        alert("File size exceeds the maximum limit of 1 MB.");
+                        fileInput.value = ""; // Clear the selected file
+                    }
+                }
+            });
+        });        
+    </script>
+</div>

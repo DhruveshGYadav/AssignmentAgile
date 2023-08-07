@@ -1,0 +1,12 @@
+E:\Material\Agile\Assignment\DBBackup\bin\Debug\net6.0\DBBackup.deps.json
+E:\Material\Agile\Assignment\DBBackup\bin\Debug\net6.0\DBBackup.dll
+E:\Material\Agile\Assignment\DBBackup\bin\Debug\net6.0\DBBackup.pdb
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.csproj.AssemblyReference.cache
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.GeneratedMSBuildEditorConfig.editorconfig
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.AssemblyInfoInputs.cache
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.AssemblyInfo.cs
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.csproj.CoreCompileInputs.cache
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.dll
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\refint\DBBackup.dll
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\DBBackup.pdb
+E:\Material\Agile\Assignment\DBBackup\obj\Debug\net6.0\ref\DBBackup.dll

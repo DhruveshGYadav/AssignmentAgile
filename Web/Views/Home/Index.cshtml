@@ -1,0 +1,458 @@
+﻿<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    @@media (min-width: 576px) {
+        .jumbotron {
+            padding: 1rem 2rem;
+        }
+    }
+
+    .tdaction {
+        width: 200px;
+    }
+
+    .tdSr {
+        width: 7%;
+    }
+
+    .btn-info {
+        margin-left: 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <input type="button" id="btnAdd" class="btn btn-primary para" value="Add New" />
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-md-12 col-sm-12 col-12 p-2 ">
+            <table id="tblData" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Email</th>
+                        <th>DOB</th>
+                        <th>Address</th>
+                        <th class="tdaction">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyUsers">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-xl">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Experience History</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closemodal();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <input type="button" id="btnAddExperience" class="btn btn-primary para" value="Add Experience" />
+                        <input type="hidden" id="hdnUserId" />
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-md-12 col-sm-12 col-12 p-2 ">
+                        <table id="tblDataExperience" class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>FromDate</th>
+                                    <th>ToDate</th>
+                                    <th>Position</th>
+                                    <th>CompanyName</th>
+                                    <th class="tdaction">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyUsersExperience">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="closemodal();">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    var emptyRow = "<tr><td colspan='6' class='text-center'> No Records Available</td></tr>";
+    var emptyRowE = "<tr><td colspan='5' class='text-center'> No Records Available</td></tr>";
+
+    var emptyNewRow = "<tr class='trNewRow'>";
+    emptyNewRow = emptyNewRow + "<td class='tdFirstName'>";
+    emptyNewRow = emptyNewRow + "<input type='text' class='form-control txtFirstName' placeholder='Enter FirstName'/>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "<td class='tdLastName'>";
+    emptyNewRow = emptyNewRow + "<input type='text' class='form-control txtLastName' placeholder='Enter LastName'/>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "<td class='tdEmail'>";
+    emptyNewRow = emptyNewRow + "<input type='text' class='form-control txtEmail' placeholder='Enter Email'/>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "<td class='tdDOB'>";
+    emptyNewRow = emptyNewRow + "<input type='text' class='form-control txtDOB' placeholder='yyyy-mm-dd'/>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "<td class='tdAddress'>";
+    emptyNewRow = emptyNewRow + "<input type='text' class='form-control txtAddress' placeholder='Enter Address'/>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "<td class='tdAction'>";
+    emptyNewRow = emptyNewRow + "<button class='btn btn-sm btn-success btn-save'> Save</button> ";
+    emptyNewRow = emptyNewRow + "<button class='btn btn-sm btn-success btn-cancel'> Cancel</button>";
+    emptyNewRow = emptyNewRow + "</td>";
+    emptyNewRow = emptyNewRow + "</tr>";
+
+    var emptyNewRowE = "<tr class='trNewRowE'>";
+    emptyNewRowE = emptyNewRowE + "<td class='tdFromDate'>";
+    emptyNewRowE = emptyNewRowE + "<input type='text' class='form-control txtFromDate' placeholder='yyyy-mm-dd'/>";
+    emptyNewRowE = emptyNewRowE + "</td>";
+    emptyNewRowE = emptyNewRowE + "<td class='tdToDate'>";
+    emptyNewRowE = emptyNewRowE + "<input type='text' class='form-control txtToDate' placeholder='yyyy-mm-dd'/>";
+    emptyNewRowE = emptyNewRowE + "</td>";
+    emptyNewRowE = emptyNewRowE + "<td class='tdPosition'>";
+    emptyNewRowE = emptyNewRowE + "<input type='text' class='form-control txtPosition' placeholder='Enter Position'/>";
+    emptyNewRowE = emptyNewRowE + "</td>";
+    emptyNewRowE = emptyNewRowE + "<td class='tdCompanyName'>";
+    emptyNewRowE = emptyNewRowE + "<input type='text' class='form-control txtCompanyName' placeholder='Enter CompanyName'/>";
+    emptyNewRowE = emptyNewRowE + "</td>";
+    emptyNewRowE = emptyNewRowE + "<td class='tdActionE'>";
+    emptyNewRowE = emptyNewRowE + "<button class='btn btn-sm btn-success btn-saveE'> Save</button> ";
+    emptyNewRowE = emptyNewRowE + "<button class='btn btn-sm btn-success btn-cancelE'> Cancel</button>";
+    emptyNewRowE = emptyNewRowE + "</td>";
+    emptyNewRowE = emptyNewRowE + "</tr>";
+
+    var rowButtons = "<button id='idValue1' class='btn btn-success btn-sm btn-edit'>Edit</button> <button id='idValue2' class='btn btn-danger btn-sm'>Delete</button> <button id='idValue3' class='btn btn-info btn-sm'>History</button>";
+    var rowUpdateButtons = "<button id='idValue1' class='btn btn-success btn-sm btn-update'> Update </button> <button id='idValue2' class='btn btn-warning btn-sm btn-updatecancel'> Cancel </button> ";
+
+    var rowButtonsE = "<button id='idValue1' class='btn btn-success btn-sm btn-editE'>Edit</button> <button id='idValue2' class='btn btn-primary btn-sm'>Delete</button>";
+    var rowUpdateButtonsE = "<button id='idValue1' class='btn btn-success btn-sm btn-updateE'> Update </button> <button id='idValue2' class='btn btn-warning btn-sm btn-updatecancelE'> Cancel </button> ";
+
+    $(document).ready(function () {
+        fnLoadDataTableInstance();
+        $("#btnAdd").click(function () {
+            if ($("#tblData tbody").children().children().length == 1) {
+                $("#tblData tbody").html("");
+            }
+            $("#tblData tbody").append(emptyNewRow);
+        });
+        $("#btnAddExperience").click(function () {
+            if ($("#tblDataExperience tbody").children().children().length == 1) {
+                $("#tblDataExperience tbody").html("");
+            }
+            $("#tblDataExperience tbody").append(emptyNewRowE);
+        });
+
+        $('#tblData').on('click', '.btn-save', function () {
+            var firstname = $(this).parent().parent().find(".txtFirstName").val();
+            var lastname = $(this).parent().parent().find(".txtLastName").val();
+            var email = $(this).parent().parent().find(".txtEmail").val();
+            var dob = $(this).parent().parent().find(".txtDOB").val();
+            var address = $(this).parent().parent().find(".txtAddress").val();
+            $(this).parent().parent().find(".tdAction").html(rowButtons);
+
+            var settings = {
+                "url": "https://localhost:7104/api/UserAPI",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "firstName": firstname,
+                    "lastName": lastname,
+                    "email": email,
+                    "dob": dob,
+                    "address": address
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                fnLoadDataTableInstance();
+            });
+        });
+        $('#tblDataExperience').on('click', '.btn-saveE', function () {
+            var userid = $("#hdnUserId").val();
+            var fromdate = $(this).parent().parent().find(".txtFromDate").val();
+            var todate = $(this).parent().parent().find(".txtToDate").val();
+            var position = $(this).parent().parent().find(".txtPosition").val();
+            var companyname = $(this).parent().parent().find(".txtCompanyName").val();
+            $(this).parent().parent().find(".tdActionE").html(rowButtonsE);
+
+            var settings = {
+                "url": "https://localhost:7104/api/UserAPI/AddExperience",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "userId": userid,
+                    "fromDate": fromdate,
+                    "toDate": todate,
+                    "position": position,
+                    "companyName": companyname,
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                LoadExperiences();
+            });
+        });
+        $('#tblData').on('click', '.btn-danger', function () {
+            var elementId = $(this).attr('id');
+            var settings = {
+                "url": "https://localhost:7104/api/UserAPI/DeleteUser?userId=" + elementId,
+                "method": "DELETE",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+            });
+            $(this).parent().parent().remove();
+            if ($("#tblData tbody").children().children().length == 0) {
+                $("#tblData tbody").append(emptyRow);
+            }
+        });
+        $('#tblDataExperience').on('click', '.btn-primary', function () {
+            var elementId = $(this).attr('id');
+            var settings = {
+                "url": "https://localhost:7104/api/UserAPI/DeleteUserExperience?Id=" + elementId,
+                "method": "DELETE",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+            });
+            $(this).parent().parent().remove();
+            if ($("#tblDataExperience tbody").children().children().length == 0) {
+                $("#tblDataExperience tbody").append(emptyRowE);
+            }
+        });
+        $('#tblData').on('click', '.btn-cancel', function () {
+            $(this).parent().parent().remove();
+        });
+        $('#tblDataExperience').on('click', '.btn-cancelE', function () {
+            $(this).parent().parent().remove();
+        });
+        $('#tblData').on('click', '.btn-edit', function () {
+            var elementId = $(this).attr('id');
+            var firstname = $(this).parent().parent().find(".tdFirstName").html();
+            $(this).parent().parent().find(".tdFirstName").html("<input type='text' value='" + firstname + "' class='form-control txtFirstName' placeholder='Enter FirstName'/>");
+            var lastname = $(this).parent().parent().find(".tdLastName").html();
+            $(this).parent().parent().find(".tdLastName").html("<input type='text' value='" + lastname + "' class='form-control txtLastName' placeholder='Enter LastName'/>");
+            var email = $(this).parent().parent().find(".tdEmail").html();
+            $(this).parent().parent().find(".tdEmail").html("<input type='text' value='" + email + "' class='form-control txtEmail' placeholder='Enter Email'/>");
+            var dob = $(this).parent().parent().find(".tdDOB").html();
+            $(this).parent().parent().find(".tdDOB").html("<input type='text' value='" + dob + "' class='form-control txtDOB' placeholder='Enter DOB'/>");
+            var address = $(this).parent().parent().find(".tdAddress").html();
+            $(this).parent().parent().find(".tdAddress").html("<input type='text' value='" + address + "' class='form-control txtAddress' placeholder='Enter Address'/>");
+            var htmlContent = rowUpdateButtons;
+            htmlContent = htmlContent.replace('idValue1', elementId);
+            htmlContent = htmlContent.replace('idValue2', elementId);            
+            $(this).parent().parent().find(".tdAction").html(htmlContent);
+        });
+        $('#tblDataExperience').on('click', '.btn-editE', function () {
+            var elementId = $(this).attr('id');            
+            var fromdate = $(this).parent().parent().find(".tdFromDate").html();
+            $(this).parent().parent().find(".tdFromDate").html("<input type='text' value='" + fromdate + "' class='form-control txtFromDate' placeholder='yyyy-mm-dd'/>");
+            var todate = $(this).parent().parent().find(".tdToDate").html();
+            $(this).parent().parent().find(".tdToDate").html("<input type='text' value='" + todate + "' class='form-control txtToDate' placeholder='yyyy-mm-dd'/>");
+            var position = $(this).parent().parent().find(".tdPosition").html();
+            $(this).parent().parent().find(".tdPosition").html("<input type='text' value='" + position + "' class='form-control txtPosition' placeholder='Enter Position'/>");
+            var companyname = $(this).parent().parent().find(".tdCompanyName").html();
+            $(this).parent().parent().find(".tdCompanyName").html("<input type='text' value='" + companyname + "' class='form-control txtCompanyName' placeholder='Enter CompanyName'/>");
+            var htmlContent = rowUpdateButtonsE;
+            htmlContent = htmlContent.replace('idValue1', elementId);
+            htmlContent = htmlContent.replace('idValue2', elementId);
+            $(this).parent().parent().find(".tdActionE").html(htmlContent);
+        });
+    });
+    function fnLoadDataTableInstance() {
+        var dataSource;
+        var htmlContent = "";
+        $(".tbodyUsers").html('');
+        $.ajax({
+            url: "https://localhost:7104/api/UserAPI",
+            success: function (result) {
+                dataSource = result;
+                if (dataSource.length > 0) {
+                    dataSource.forEach(function (item) {
+                        htmlContent = htmlContent + "<tr class='trNewRow'>";
+                        htmlContent = htmlContent + "<td class='tdFirstName'>";
+                        htmlContent = htmlContent + item.firstName;
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdLastName'>";
+                        htmlContent = htmlContent + item.lastName;
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdEmail'>";
+                        htmlContent = htmlContent + item.email;
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdDOB'>";
+                        htmlContent = htmlContent + new Date(item.dob).toISOString().substring(0, 10);
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdAddress'>";
+                        htmlContent = htmlContent + item.address;
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdAction'>";
+                        htmlContent = htmlContent + "<button id='" + item.id + "' class='btn btn-success btn-sm btn-edit'>Edit</button> ";
+                        htmlContent = htmlContent + "<button id='" + item.id + "' class='btn btn-danger btn-sm'>Delete</button>";
+                        htmlContent = htmlContent + "<button id='" + item.id + "' class='btn btn-info btn-sm'>History</button>";
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "</tr>";
+                    });
+                    $(".tbodyUsers").append(htmlContent);
+                }
+                else { htmlContent = emptyRow; }
+            }
+        });
+    }
+    $('#tblData').on('click', '.btn-update', function () {
+        var elementId = $(this).attr('id');
+        var firstname = $(this).parent().parent().find(".txtFirstName").val();
+        var lastname = $(this).parent().parent().find(".txtLastName").val();
+        var email = $(this).parent().parent().find(".txtEmail").val();
+        var dob = $(this).parent().parent().find(".txtDOB").val();
+        var address = $(this).parent().parent().find(".txtAddress").val();
+        $(this).parent().parent().find(".tdAction").html(rowButtons);
+        var settings = {
+            "url": "https://localhost:7104/api/UserAPI/UpdateUser",
+            "method": "PUT",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "id": parseInt(elementId),
+                "firstName": firstname,
+                "lastName": lastname,
+                "email": email,
+                "dob": dob,
+                "address": address
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            fnLoadDataTableInstance();
+        });
+    });
+    $('#tblDataExperience').on('click', '.btn-updateE', function () {
+        var elementId = $(this).attr('id');        
+        var fromdate = $(this).parent().parent().find(".txtFromDate").val();
+        var todate = $(this).parent().parent().find(".txtToDate").val();
+        var position = $(this).parent().parent().find(".txtPosition").val();
+        var companyname = $(this).parent().parent().find(".txtCompanyName").val();
+        $(this).parent().parent().find(".tdActionE").html(rowButtonsE);
+        var settings = {
+            "url": "https://localhost:7104/api/UserAPI/UpdateUserExperience",
+            "method": "PUT",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "id": parseInt(elementId),
+                "userId": parseInt($("#hdnUserId").val()),
+                "fromDate": fromdate,
+                "toDate": todate,
+                "position": position,
+                "companyName": companyname,
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            LoadExperiences();
+        });
+    });
+    $('#tblData').on('click', '.btn-updatecancel', function () {
+        var elementId = $(this).attr('id');
+        var uelementId = $(this).attr('uid');
+        var firstname = $(this).parent().parent().find(".txtFirstName").val();
+        var lastname = $(this).parent().parent().find(".txtLastName").val();
+        var email = $(this).parent().parent().find(".txtEmail").val();
+        var dob = $(this).parent().parent().find(".txtDOB").val();
+        var address = $(this).parent().parent().find(".txtAddress").val();
+        $(this).parent().find(".tdAction").html(rowButtons);
+        $(this).parent().parent().find(".tdFirstName").html(firstname);
+        $(this).parent().parent().find(".tdLastName").html(lastname);
+        $(this).parent().parent().find(".tdEmail").html(email);
+        $(this).parent().parent().find(".tdDOB").html(dob);
+        $(this).parent().parent().find(".tdAddress").html(address);
+        var htmlContent = rowButtons;
+        htmlContent = htmlContent.replace('idValue1', elementId);
+        htmlContent = htmlContent.replace('idValue2', elementId);
+        htmlContent = htmlContent.replace('idValue3', elementId);
+        htmlContent = htmlContent.replace('uidValue1', uelementId);
+        htmlContent = htmlContent.replace('uidValue2', uelementId);        
+        $(this).parent().parent().find(".tdAction").html(htmlContent);
+    });
+    $('#tblDataExperience').on('click', '.btn-updatecancelE', function () {
+        var elementId = $(this).attr('id');
+        var fromdate = $(this).parent().parent().find(".txtFromDate").val();
+        var todate = $(this).parent().parent().find(".txtToDate").val();
+        var position = $(this).parent().parent().find(".txtPosition").val();
+        var companyname = $(this).parent().parent().find(".txtCompanyName").val();
+        $(this).parent().find(".tdActionE").html(rowButtonsE);
+        $(this).parent().parent().find(".tdFromDate").html(fromdate);
+        $(this).parent().parent().find(".tdToDate").html(todate);
+        $(this).parent().parent().find(".tdPosition").html(position);
+        $(this).parent().parent().find(".tdCompanyName").html(companyname);
+        var htmlContent = rowButtonsE;
+        htmlContent = htmlContent.replace('idValue1', elementId);
+        htmlContent = htmlContent.replace('idValue2', elementId);        
+        $(this).parent().parent().find(".tdActionE").html(htmlContent);
+    });
+    $('#tblData').on('click', '.btn-info', function () {
+        var elementId = $(this).attr('id');
+        $("#hdnUserId").val(elementId);
+        $("#myModal").modal("show");
+        LoadExperiences();
+    });
+    function closemodal() {
+        $("#myModal").modal("hide");
+    }
+    function LoadExperiences() {
+        var dataSource;
+        var htmlContent = "";
+        var userid = $("#hdnUserId").val();
+        $(".tbodyUsersExperience").html('');
+        $.ajax({
+            url: "https://localhost:7104/api/UserAPI/" + userid,
+            success: function (result) {
+                dataSource = result;
+                if (dataSource.length > 0) {
+                    dataSource.forEach(function (item) {
+                        htmlContent = htmlContent + "<tr class='trNewRowE'>";
+                        htmlContent = htmlContent + "<td class='tdFromDate'>";
+                        htmlContent = htmlContent + new Date(item.fromDate).toISOString().substring(0, 10);
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdToDate'>";
+                        htmlContent = htmlContent + new Date(item.toDate).toISOString().substring(0, 10);
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdPosition'>";
+                        htmlContent = htmlContent + item.position;
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "<td class='tdCompanyName'>";
+                        htmlContent = htmlContent + item.companyName;
+                        htmlContent = htmlContent + "</td>";                        
+                        htmlContent = htmlContent + "<td class='tdActionE'>";
+                        htmlContent = htmlContent + "<button id='" + item.id + "' class='btn btn-success btn-sm btn-editE'>Edit</button> ";
+                        htmlContent = htmlContent + "<button id='" + item.id + "' class='btn btn-primary btn-sm'>Delete</button>";
+                        htmlContent = htmlContent + "</td>";
+                        htmlContent = htmlContent + "</tr>";
+                    });
+                    $(".tbodyUsersExperience").append(htmlContent);
+                }
+                else { htmlContent = emptyRowE; }
+            }
+        });
+    }
+</script> 
